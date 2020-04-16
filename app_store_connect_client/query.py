@@ -58,6 +58,28 @@ class QueryType(enum.Enum):
 
 
 class Query(object):
-    def __init__(self, app_id, config):
+    def __init__(self, app_id, config, api_url=None):
         self.app_id = app_id
-        self.con
+        self.config = {
+            "start": None,
+            "end": None,
+            "group": null,
+            "frequency": "DAY",
+            "dimensionFilters": [],
+        }
+        self.api_url = 'https://analytics.itunes.apple.com/analytics/api/v1'
+    
+        self.config.update(config)
+
+# TODO Replace below with Python.
+#  if (!_.isArray(this.config.measures)) {
+#    this.config.measures = [this.config.measures];
+#  }
+#
+        self.__time = None
+    
+    def metrics(self):
+        endpoint = "/data/time-series"
+        for key in ["limit", "dimension"]:
+            #TODO configのdictからlimit と dimensionをkeyに持つものを削除
+            pass
