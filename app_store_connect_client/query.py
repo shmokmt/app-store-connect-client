@@ -55,3 +55,9 @@ class Platform(enum.Enum):
 class QueryType(enum.Enum):
     sources = "sources"
     metrics = "metrics"
+
+
+class Query(object):
+    def __init__(self, app_id, config):
+        self.app_id = app_id
+        self.con
