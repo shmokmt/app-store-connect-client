@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "app-store-connect-client"
+version = "0.1.0"
+description = "Python package for App Store connect Analytics."
+authors = ["shmokmt <shoma.okamoto@fuller.co.jp>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+requests = "^2.23.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.4.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
