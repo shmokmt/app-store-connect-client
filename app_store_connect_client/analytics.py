@@ -1,3 +1,5 @@
+import requests
+
 class ITunes(object):
     def __init__(self, username, password, options=None):
         self.options = {
@@ -20,8 +22,18 @@ class ITunes(object):
     def change_provider(self, provider_id, callback):
         pass
 
-    def login(self, login):
-        pass
+    def login(self, username, password):
+        # resolvewithfullrepsponse?
+        payload = {
+            'accountName': username, 'password': password, 'rememberMe': False
+        }
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Apple-Widget-Key': self.options["apple_widget_key"]
+        }
+        r = requests.post(self.options["login_url"] + "signin", data=payload, headers=headers)
+        # if status_code is not 409 then 
+        
 
     def get_apps(self, apps):
         pass
@@ -33,12 +45,16 @@ class ITunes(object):
     def get_api_url(self, uri, callback):
         pass
 
-    def get_headers():
+
+    def get_cookies(self):
+        return self._cookies
+
+    def get_headers(self):
         return {
             'Content-Type': 'application/json;charset=UTF-8',
             'Accept': 'application/json, text/plain, */*',
             'Origin': 'https://analytics.itunes.apple.com',
             'X-Requested-By': 'analytics.itunes.apple.com',
             'Referer': 'https://analytics.itunes.apple.com/',
-            'Cookie': this._cookies
+            'Cookie': self._cookies
         };
