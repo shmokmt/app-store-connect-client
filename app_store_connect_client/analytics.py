@@ -1,6 +1,7 @@
 import requests
 import asyncio
 from urllib.parse import urlparse
+import re
 class ITunes(object):
     def __init__(self, username, password, options=None):
         self.options = {
@@ -34,7 +35,6 @@ class ITunes(object):
         pass
 
     def login(self, username, password):
-        # resolvewithfullrepsponse?
         payload = {
             'accountName': username, 'password': password, 'rememberMe': False
         }
@@ -56,10 +56,22 @@ class ITunes(object):
             'Sec-Fetch-Site': 'same-origin',
             'Sec-Fetch-Mode': 'cors',
         };
-        #TODO 2FAの処理
+
+        print("Enter the 2FA code:")
+        two_factor_auth_code = input()
+        requests.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
+        r = requests.post(self.options["login_url"] + "/2sv/trust", headers=headers)
         cookies = r.headers['set-cookie']
         if !(cookies and len(cookies) == 0):
             raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
+
+        cookie = re.match('/myacinfo=.+?;/', cookies)
+        r = requests.get(self.options["base_url"] + "/session", allow_redirects=False, headers={'Cookie': cookie})
+        self._cookies = cookie
+
+        it_ctx = re.match('/itctx=.+?;/', cookies)
+        # TODO: itCtx Error handling.
+
 
 
         
