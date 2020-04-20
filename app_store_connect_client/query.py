@@ -63,13 +63,16 @@ class Query(object):
         self.config = {
             "start": None,
             "end": None,
-            "group": null,
+            "group": None,
             "frequency": "DAY",
             "dimensionFilters": [],
         }
         self.api_url = 'https://analytics.itunes.apple.com/analytics/api/v1'
     
         self.config.update(config)
+
+# AnalyticsQuery オブジェクトは実装しない
+
 
 # TODO Replace below with Python.
 #  if (!_.isArray(this.config.measures)) {
@@ -83,3 +86,49 @@ class Query(object):
         for key in ["limit", "dimension"]:
             #TODO configのdictからlimit と dimensionをkeyに持つものを削除
             pass
+    
+    def date(self, start, end=None):
+        #js : to moment object.
+        self.config["start"] = start
+        if end is not None:
+            self.config["end"] = end
+        
+    def time(self, value, unit):
+        self._time = value, unit
+
+    def limit(self, limit):
+        config["limit"] = limit
+    
+    def assemble_body(self):
+        # convert datetime obj?
+        # self.config["start"]
+        # self.config["end"]
+        if hoge:
+            pass
+
+        elif foo:
+            pass
+
+        timestamp_format = "YYYY-"
+
+        if type(self.config["measures"]) is not list:
+            self.config["measures"] = list(self.config["measures"])
+        
+        body = {
+            "start_time": self.config["start"],
+            "end_time": self.config["end"],
+            "admId": 
+        }
+
+    def sources(self):
+        end_point = "/data/sources/list"
+        for key in ["limit", "group", "dimensionFilters"]:
+            #TODO: KeyError handling.
+            del self.config[key]
+        
+        defaults = [
+            {"key": "limit", "value": 200},
+            {"key": "dimension", "value": "domainReferrer"}
+        ]
+
+        #TODO: KeyError handling
