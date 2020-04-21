@@ -62,7 +62,7 @@ class ITunes(object):
         requests.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
         r = requests.post(self.options["login_url"] + "/2sv/trust", headers=headers)
         cookies = r.headers['set-cookie']
-        if !(cookies and len(cookies) == 0):
+        if cookies is None or len(cookies) == 0:
             raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
 
         cookie = re.match('/myacinfo=.+?;/', cookies)
@@ -70,7 +70,9 @@ class ITunes(object):
         self._cookies = cookie
 
         it_ctx = re.match('/itctx=.+?;/', cookies)
-        # TODO: itCtx Error handling.
+        if it_ctx is None or len(it_ctx) == 0:
+            raise Exception("No itCtx cookie :( Apple probably changed the login process")
+        self._cookies += it_ctx
 
 
 
