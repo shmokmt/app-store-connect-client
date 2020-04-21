@@ -1,5 +1,5 @@
 import enum
-
+from datetime import datetime
 
 class Frequency(enum.Enum):
     day = "DAY"
@@ -70,65 +70,63 @@ class Query(object):
         self.api_url = 'https://analytics.itunes.apple.com/analytics/api/v1'
     
         self.config.update(config)
-
-# AnalyticsQuery オブジェクトは実装しない
-
-
-# TODO Replace below with Python.
-#  if (!_.isArray(this.config.measures)) {
-#    this.config.measures = [this.config.measures];
-#  }
-#
         self.__time = None
     
     def metrics(self):
         endpoint = "/data/time-series"
         for key in ["limit", "dimension"]:
-            #TODO configのdictからlimit と dimensionをkeyに持つものを削除
-            pass
-    
-    def date(self, start, end=None):
-        #js : to moment object.
-        self.config["start"] = start
-        if end is not None:
-            self.config["end"] = end
-        
-    def time(self, value, unit):
-        self._time = value, unit
-
-    def limit(self, limit):
-        config["limit"] = limit
-    
-    def assemble_body(self):
-        # convert datetime obj?
-        # self.config["start"]
-        # self.config["end"]
-        if hoge:
-            pass
-
-        elif foo:
-            pass
-
-        timestamp_format = "YYYY-"
-
-        if type(self.config["measures"]) is not list:
-            self.config["measures"] = list(self.config["measures"])
-        
-        body = {
-            "start_time": self.config["start"],
-            "end_time": self.config["end"],
-            "admId": 
-        }
-
-    def sources(self):
-        end_point = "/data/sources/list"
-        for key in ["limit", "group", "dimensionFilters"]:
-            #TODO: KeyError handling.
             del self.config[key]
         
         defaults = [
-            {"key": "limit", "value": 200},
-            {"key": "dimension", "value": "domainReferrer"}
+            {"key": 'group', 'value': None},
+            {"key": 'dimensionFilters', 'value': []}
         ]
 
-        #TODO: KeyError handling
+        return self
+    
+    def date(self, start, end=None):
+        self.config["start"] = datetime.(start, '%Y-%m-%d')
+        if end is not None:
+            self.config["end"] = datetime.strptime(end, '%Y-%m-%d')
+        return self
+        
+    def time(self, value, unit):
+        # e.g. .time(1, 'days')
+        self._time = value, unit
+        return self
+
+    def limit(self, limit):
+        # example usage.
+        # var query = new AnalyticsQuery.sources(appId, {
+        # measures: itc.measures.pageViews,
+        # dimension: itc.dimension.websites,
+        # limit 100
+        # }).time(1, 'days');
+        self.config["limit"] = limit
+        return self
+    
+    def assemble_body(self):
+        body = {
+            "startTime": self.config["start"],
+            "endTime": self.config["end"],
+            "admId": self.app_id
+        }
+        cfg = {}
+        cfg.update(self.config)
+        del cfg["start"]
+        del cfg["end"]
+        for key, value in cfg:
+            body[prop] = value
+        return body
+
+    def sources(self, limit=200, dimension="domainReferrer"):
+        end_point = "/data/sources/list"
+        for key in ["limit", "group", "dimensionFilters"]:
+            del self.config[key]
+        
+        defaults = [
+            {"key": "limit", "value": limit},
+            {"key": "dimension", "value": dimension}
+        ]
+
+        return self
