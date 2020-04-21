@@ -85,7 +85,7 @@ class Query(object):
         return self
     
     def date(self, start, end=None):
-        self.config["start"] = datetime.(start, '%Y-%m-%d')
+        self.config["start"] = datetime.strptime(start, '%Y-%m-%d')
         if end is not None:
             self.config["end"] = datetime.strptime(end, '%Y-%m-%d')
         return self
