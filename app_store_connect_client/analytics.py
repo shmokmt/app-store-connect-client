@@ -5,7 +5,7 @@ import re
 import json
 
 from . import query
-class ITunes(object):
+class Client(object):
     def __init__(self, username, password, options=None):
         self.options = {
             "base_url": "https://appstoreconnect.apple.com/olympus/v1",
