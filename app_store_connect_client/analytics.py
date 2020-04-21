@@ -3,6 +3,8 @@ import asyncio
 from urllib.parse import urlparse
 import re
 import json
+
+from . import query
 class ITunes(object):
     def __init__(self, username, password, options=None):
         self.options = {
@@ -20,20 +22,18 @@ class ITunes(object):
         else:
             self._cookies = self.options["cookies"]
     
-    def execute_request(self, task, callback):
-        query = task.query
-        completed = task.completed
+    def execute(self, query=None):
         request_body = query.assemble_body()
-        uri = urlparse(query.api_url + query.endpoint)
-        r = requests.post(uri, headers=self.get_headers(), timeout=300000, data=request_body)
-        if r.status_code == 401:
+        url = urlparse(query.api_url + query.endpoint)
+        res = requests.post(url, headers=self.get_headers(), timeout=300000, data=request_body)
+        if res.status_code == 401:
             raise Exception("This request requires authentication. Please check your username and password.")
+        return res
 
-    def request(self, query, callback):
-        pass
-
+# TODO: Impl. below method.
     def change_provider(self, provider_id, callback):
         pass
+
 
     def login(self, username, password):
         payload = {
@@ -101,5 +101,4 @@ class ITunes(object):
             'Origin': 'https://analytics.itunes.apple.com',
             'X-Requested-By': 'analytics.itunes.apple.com',
             'Referer': 'https://analytics.itunes.apple.com/',
-#            'Cookie': self.get_cookies()
         };
