@@ -12,7 +12,7 @@ class ITunes(object):
             "apple_widget_key": "e0b80c3bf78523bfe80974d320935bfa30add02e1bff88ec2166c6bd5a706c42",
         }
 
-        self._cookies = []
+        self.session = requests.Session()
         self._queue = asyncio.Queue(maxsize=2)
         
         if self.options.get("cookies") is None:
@@ -43,8 +43,7 @@ class ITunes(object):
             'Content-Type': 'application/json',
             'X-Apple-Widget-Key': self.options["apple_widget_key"]
         }
-        session = requests.Session()
-        r = session.post(self.options["login_url"] + "/signin", json=payload, headers=headers)
+        r = self.session.post(self.options["login_url"] + "/signin", json=payload, headers=headers)
         
         headers = {
             'Content-Type': 'application/json',
@@ -59,39 +58,41 @@ class ITunes(object):
 
         print("Enter the 2FA code:")
         two_factor_auth_code = input()
-        requests.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
-        r = session.post(self.options["login_url"] + "/2sv/trust", headers=headers)
+        self.session.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
+        r = self.session.post(self.options["login_url"] + "/2sv/trust", headers=headers)
         cookies = r.headers['set-cookie']
-#        print(json.dumps(dict(r.headers), indent=2))
         if cookies is None or len(cookies) == 0:
             raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
 
-        session.get(self.options["base_url"] + "/session", allow_redirects=False)
-        if 'myacinfo' not in session.cookies.get_dict().keys():
+        self.session.get(self.options["base_url"] + "/session", allow_redirects=False)
+        if 'myacinfo' not in self.session.cookies.get_dict().keys():
             raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
 
-        if 'itctx' not in session.cookies.get_dict().keys():
+        if 'itctx' not in self.session.cookies.get_dict().keys():
             raise Exception("No itCtx cookie :( Apple probably changed the login process")
 
 
 
         
 
-    def get_apps(self, apps, callback):
+    def get_apps(self):
         url = self.options['settings_url'] + '/app-info/all'
-        self.get_api_url(url, callback)
+        self.get_api_url(url)
 
-    def get_settings(self, callback):
+    def get_settings(self):
         url = self.options['settings_url'] + '/settings/all'
-        self.get_api_url(url, callback)
+        self.get_api_url(url)
 
 
-    def get_api_url(self, uri, callback):
-        pass
+    def get_api_url(self, url):
+        res = self.session.get(url, headers=self.get_headers(), timeout=500)
+        print(json.dumps(res.text, indent=4))
+
 
 
     def get_cookies(self):
-        return self._cookies
+        cookies = self.session.cookies.get_dict()
+        return cookies["myacinfo"] + " " + cookies["itctx"]
 
     def get_headers(self):
         return {
@@ -100,5 +101,5 @@ class ITunes(object):
             'Origin': 'https://analytics.itunes.apple.com',
             'X-Requested-By': 'analytics.itunes.apple.com',
             'Referer': 'https://analytics.itunes.apple.com/',
-            'Cookie': self._cookies
+#            'Cookie': self.get_cookies()
         };
