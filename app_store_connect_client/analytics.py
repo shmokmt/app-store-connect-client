@@ -2,6 +2,7 @@ import requests
 import asyncio
 from urllib.parse import urlparse
 import re
+import json
 class ITunes(object):
     def __init__(self, username, password, options=None):
         self.options = {
@@ -42,9 +43,8 @@ class ITunes(object):
             'Content-Type': 'application/json',
             'X-Apple-Widget-Key': self.options["apple_widget_key"]
         }
-        r = requests.post(self.options["login_url"] + "signin", data=payload, headers=headers)
-        if r.status_code != 409:
-            raise Exception("409 Conflict.")
+        session = requests.Session()
+        r = session.post(self.options["login_url"] + "/signin", json=payload, headers=headers)
         
         headers = {
             'Content-Type': 'application/json',
@@ -60,19 +60,18 @@ class ITunes(object):
         print("Enter the 2FA code:")
         two_factor_auth_code = input()
         requests.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
-        r = requests.post(self.options["login_url"] + "/2sv/trust", headers=headers)
+        r = session.post(self.options["login_url"] + "/2sv/trust", headers=headers)
         cookies = r.headers['set-cookie']
+#        print(json.dumps(dict(r.headers), indent=2))
         if cookies is None or len(cookies) == 0:
             raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
 
-        cookie = re.match('/myacinfo=.+?;/', cookies)
-        r = requests.get(self.options["base_url"] + "/session", allow_redirects=False, headers={'Cookie': cookie})
-        self._cookies = cookie
+        session.get(self.options["base_url"] + "/session", allow_redirects=False)
+        if 'myacinfo' not in session.cookies.get_dict().keys():
+            raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
 
-        it_ctx = re.match('/itctx=.+?;/', cookies)
-        if it_ctx is None or len(it_ctx) == 0:
+        if 'itctx' not in session.cookies.get_dict().keys():
             raise Exception("No itCtx cookie :( Apple probably changed the login process")
-        self._cookies += it_ctx
 
 
 
