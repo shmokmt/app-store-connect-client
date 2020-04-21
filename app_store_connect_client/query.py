@@ -72,7 +72,7 @@ class Query(object):
         self.config.update(config)
         self.__time = None
     
-    def metrics(self):
+    def metrics(self, config):
         endpoint = "/data/time-series"
         for key in ["limit", "dimension"]:
             del self.config[key]
