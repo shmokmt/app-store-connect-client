@@ -24,15 +24,18 @@ class Client(object):
     
     def execute(self, query=None):
         request_body = query.assemble_body()
-        url = urlparse(query.api_url + query.endpoint)
-        res = requests.post(url, headers=self.get_headers(), timeout=300000, data=request_body)
+        parsed_url = urlparse(query.api_url + query.end_point)
+        headers = self.get_headers()
+        # cookies = self.get_cookies()
+        # headers["Cookie"] = cookies
+        res = requests.post(parsed_url.geturl(), headers=headers, timeout=300000, data=request_body)
         if res.status_code == 401:
             raise Exception("This request requires authentication. Please check your username and password.")
         return res
 
-# TODO: Impl. below method.
     def change_provider(self, provider_id, callback):
-        pass
+        data = {'provider': {'providerId': provider_id}}
+        self.session.post(url=self.options["base_url"]) 
 
 
     def login(self, username, password):
@@ -56,9 +59,10 @@ class Client(object):
             'Sec-Fetch-Mode': 'cors',
         };
 
-        print("Enter the 2FA code:")
-        two_factor_auth_code = input()
-        self.session.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
+        # TODO: Enable 2FA verify.
+        # print("Enter the 2FA code:")
+        # two_factor_auth_code = input()
+        # self.session.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
         r = self.session.post(self.options["login_url"] + "/2sv/trust", headers=headers)
         cookies = r.headers['set-cookie']
         if cookies is None or len(cookies) == 0:
@@ -71,7 +75,18 @@ class Client(object):
         if 'itctx' not in self.session.cookies.get_dict().keys():
             raise Exception("No itCtx cookie :( Apple probably changed the login process")
 
+        print("ログイン成功")
 
+
+    def has_itc_cookie(self):
+        if self.session.cookies.get('itctx'):
+            return True
+        return False
+    
+    def has_myacinfo_cookie(self):
+        if self.session.cookies.get('myacinfo'):
+            return True
+        return False
 
         
 
@@ -86,13 +101,9 @@ class Client(object):
 
     def get_api_url(self, url):
         res = self.session.get(url, headers=self.get_headers(), timeout=500)
-        print(json.dumps(res.text, indent=4))
 
 
 
-    def get_cookies(self):
-        cookies = self.session.cookies.get_dict()
-        return cookies["myacinfo"] + " " + cookies["itctx"]
 
     def get_headers(self):
         return {
@@ -102,3 +113,11 @@ class Client(object):
             'X-Requested-By': 'analytics.itunes.apple.com',
             'Referer': 'https://analytics.itunes.apple.com/',
         };
+    
+    def get_last_reviews(self):
+        r = self.session.get('https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/apps/{app_id}'
+                             '/platforms/ios/reviews'.format(app_id='1318551883'))
+        data = json.loads(r.text)
+        print(data)
+        print(r.status_code)
+        return data

@@ -58,7 +58,7 @@ class QueryType(enum.Enum):
 
 
 class Query(object):
-    def __init__(self, app_id, config, api_url=None):
+    def __init__(self, app_id, config, api_url=None, end_point=None):
         self.app_id = app_id
         self.config = {
             "start": None,
@@ -68,6 +68,7 @@ class Query(object):
             "dimensionFilters": [],
         }
         self.api_url = 'https://analytics.itunes.apple.com/analytics/api/v1'
+        self.end_point = None
     
         self.config.update(config)
         self.__time = None
@@ -96,12 +97,6 @@ class Query(object):
         return self
 
     def limit(self, limit):
-        # example usage.
-        # var query = new AnalyticsQuery.sources(appId, {
-        # measures: itc.measures.pageViews,
-        # dimension: itc.dimension.websites,
-        # limit 100
-        # }).time(1, 'days');
         self.config["limit"] = limit
         return self
     
@@ -115,18 +110,17 @@ class Query(object):
         cfg.update(self.config)
         del cfg["start"]
         del cfg["end"]
-        for key, value in cfg:
-            body[prop] = value
-        return body
+        for key, value in cfg.items():
+            if value is None:
+                del(cfg[key])
+        return cfg
 
     def sources(self, limit=200, dimension="domainReferrer"):
-        end_point = "/data/sources/list"
+        self.end_point = "/data/sources/list"
         for key in ["limit", "group", "dimensionFilters"]:
             del self.config[key]
-        
-        defaults = [
-            {"key": "limit", "value": limit},
-            {"key": "dimension", "value": dimension}
-        ]
-
+        # if self.config["limit"] is None:
+        #     self.config["limit"] = 200
+        # if self.config["dimension"] is None:
+        #     self.config["dimension"] = dimension
         return self
