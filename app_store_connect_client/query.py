@@ -1,64 +1,8 @@
 import enum
 from datetime import datetime
 
-class Frequency(enum.Enum):
-    days = "DAY"
-    weeks = "WEEK"
-    monthlys = "MONTHLY"
-    
-
-class Measures(enum.Enum):
-    installs = "installs"
-    uninstalls = "uninstalls"
-    sessions = "sessions"
-    page_views = "pageViewCount"
-    active_devices = "activeDevices"
-    active_last_30days = "rollingActiveDevices"
-    crashes = "crashes"
-    paying_users = "payingUses"
-    units = "units"
-    sales = "sales"
-    iap = "iap"
-    impressions = "impressionsTotal"
-    impressions_unique = "impressionsTotalUnique"
-    page_view_unique = "pageViewUnique"
-
-class Dimension(enum.Enum):
-    app_version = "appVersion"
-    campaigns = "campaignId"
-    device = "platform"
-    platform_version = "platformVersion"
-    region = "region"
-    territory = "storefront"
-    websites = "domainReferrer"
-    apps = "appReferrer"
-    source_type = "source"
-
-class DimensionFilterKey(enum.Enum):
-    app_purchase_week = "apppurchaseweek"
-    app_purchase_day = "apppurchaseday"
-    app_purchase_month = "apppurchasemonth"
-    app_version = "appVersion"
-    campaigns = "campaignId"
-    device = "platform"
-    platform_version = "PlatformVersion"
-    territory = "storefront"
-    region = "region"
-    websites = "domainReferrer"
-
-class Platform(enum.Enum):
-    iphone = "iPhone"
-    ipad = "iPad"
-    iPod = "iPod"
-    apple_tv = "AppleTV"
-
-class QueryType(enum.Enum):
-    sources = "sources"
-    metrics = "metrics"
-
-
 class Query(object):
-    def __init__(self, app_id, config=None, api_url=None, end_point=None):
+    def __init__(self, app_id):
         self.app_id = app_id
         self.config = {
             "start": None,
@@ -67,13 +11,12 @@ class Query(object):
             "frequency": "DAY",
             "dimensionFilters": [],
         }
-        self.api_url = 'https://analytics.itunes.apple.com/analytics/api/v1'
-        self.end_point = None
-    
-        self.__time = None
+        self._api_url = 'https://analytics.itunes.apple.com/analytics/api/v1'
+        self._end_point = None
+        self._time = None
     
     def metrics(self, config):
-        self.end_point = "/data/time-series"
+        self._end_point = "/data/time-series"
         for key in ["limit", "dimension"]:
             if config.get(key):
                 del self.config[key]
@@ -119,6 +62,13 @@ class Query(object):
         del cfg["start"]
         del cfg["end"]
         body = cfg
-        #TODO: time のケア
+        value, unit = self._time
+        if unit == "days" and type(self._time) is list:
+            self.config["start"] -= value
+        elif self.config["end"] > self.config["start"]:
+            self.config["start"] = self.config["end"]
+        else:
+            raise Exception("Assemble body error.")
+
         return body
 
