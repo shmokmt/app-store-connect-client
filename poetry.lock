@@ -193,7 +193,7 @@ checkqa-mypy = ["mypy (v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Add .env support to your django/flask apps in development and deployments"
 name = "python-dotenv"
 optional = false
@@ -299,7 +299,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "044209d743c86153572372ab7766aa0fe8d68fa71bb70577d5e2833957457bc2"
+content-hash = "6aabd6b05e67d811fafc1c8f2d31afdfe73d93138f3e1aa078b8c0c2897e641b"
 python-versions = "^3.7"
 
 [metadata.files]
