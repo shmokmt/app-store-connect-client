@@ -26,11 +26,13 @@ class Client(object):
         request_body = query.assemble_body()
         parsed_url = urlparse(query.api_url + query.end_point)
         headers = self.get_headers()
-        # cookies = self.get_cookies()
-        # headers["Cookie"] = cookies
-        res = requests.post(parsed_url.geturl(), headers=headers, timeout=300000, data=request_body)
+        res = self.session.post(parsed_url.geturl(), headers=headers, timeout=300000, json=request_body)
         if res.status_code == 401:
             raise Exception("This request requires authentication. Please check your username and password.")
+        if res.status_code == 400:
+            print(request_body)
+            print(res.headers)
+            raise Exception("400 Bad Request.")
         return res
 
     def change_provider(self, provider_id, callback):

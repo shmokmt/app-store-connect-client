@@ -2,9 +2,9 @@ import enum
 from datetime import datetime
 
 class Frequency(enum.Enum):
-    day = "DAY"
-    week = "WEEK"
-    monthly = "MONTHLY"
+    days = "DAY"
+    weeks = "WEEK"
+    monthlys = "MONTHLY"
     
 
 class Measures(enum.Enum):
@@ -58,7 +58,7 @@ class QueryType(enum.Enum):
 
 
 class Query(object):
-    def __init__(self, app_id, config, api_url=None, end_point=None):
+    def __init__(self, app_id, config=None, api_url=None, end_point=None):
         self.app_id = app_id
         self.config = {
             "start": None,
@@ -70,21 +70,30 @@ class Query(object):
         self.api_url = 'https://analytics.itunes.apple.com/analytics/api/v1'
         self.end_point = None
     
-        self.config.update(config)
         self.__time = None
     
     def metrics(self, config):
-        endpoint = "/data/time-series"
+        self.end_point = "/data/time-series"
         for key in ["limit", "dimension"]:
-            del self.config[key]
-        
-        defaults = [
-            {"key": 'group', 'value': None},
-            {"key": 'dimensionFilters', 'value': []}
-        ]
-
+            if config.get(key):
+                del self.config[key]
+        if not self.config.get("group"):
+            self.config["group"] = None
+        if not self.config.get("dimensionFilters"):
+            self.config["dimensionFilters"] = []
         return self
     
+    def sources(self, limit=200, dimension="domainReferrer"):
+        self.end_point = "/data/sources/list"
+        for key in ["limit", "group", "dimensionFilters"]:
+            if config.get(key):
+                del self.config[key]
+        if not self.config.get("limit"):
+            self.config["limit"] = limit
+        if not self.config["dimension"]:
+            self.config["dimension"] = dimension
+        return self
+
     def date(self, start, end=None):
         self.config["start"] = datetime.strptime(start, '%Y-%m-%d')
         if end is not None:
@@ -92,7 +101,6 @@ class Query(object):
         return self
         
     def time(self, value, unit):
-        # e.g. .time(1, 'days')
         self._time = value, unit
         return self
 
@@ -110,17 +118,7 @@ class Query(object):
         cfg.update(self.config)
         del cfg["start"]
         del cfg["end"]
-        for key, value in cfg.items():
-            if value is None:
-                del(cfg[key])
-        return cfg
+        body = cfg
+        #TODO: time のケア
+        return body
 
-    def sources(self, limit=200, dimension="domainReferrer"):
-        self.end_point = "/data/sources/list"
-        for key in ["limit", "group", "dimensionFilters"]:
-            del self.config[key]
-        # if self.config["limit"] is None:
-        #     self.config["limit"] = 200
-        # if self.config["dimension"] is None:
-        #     self.config["dimension"] = dimension
-        return self
