@@ -1,6 +1,6 @@
 import enum
-from datetime import datetime
-
+from datetime import date, datetime
+from urllib.parse import urlparse
 class Query(object):
     def __init__(self, app_id):
         self.app_id = app_id
@@ -15,6 +15,10 @@ class Query(object):
         self._end_point = None
         self._time = None
     
+    @property
+    def analytics_url(self):
+        return urlparse(self._api_url + self._end_point).geturl()
+    
     def metrics(self, config):
         self._end_point = "/data/time-series"
         for key in ["limit", "dimension"]:
@@ -26,49 +30,37 @@ class Query(object):
             self.config["dimensionFilters"] = []
         return self
     
-    def sources(self, limit=200, dimension="domainReferrer"):
-        self.end_point = "/data/sources/list"
+    def sources(self, config):
+        self._end_point = "/data/sources/list"
         for key in ["limit", "group", "dimensionFilters"]:
-            if config.get(key):
+            if self.config.get(key):
                 del self.config[key]
         if not self.config.get("limit"):
-            self.config["limit"] = limit
-        if not self.config["dimension"]:
-            self.config["dimension"] = dimension
+            self.config["limit"] = 200
+        if not self.config.get("dimension"):
+            self.config["dimension"] = "domainReferer"
+        if not self.config.get("measures"):
+            self.config["measures"] = ["installs"]
         return self
 
     def date(self, start, end=None):
-        self.config["start"] = datetime.strptime(start, '%Y-%m-%d')
+        self.config["start"] = start
         if end is not None:
-            self.config["end"] = datetime.strptime(end, '%Y-%m-%d')
+            self.config["end"] = start
         return self
         
-    def time(self, value, unit):
-        self._time = value, unit
-        return self
 
-    def limit(self, limit):
-        self.config["limit"] = limit
-        return self
-    
     def assemble_body(self):
         body = {
-            "startTime": self.config["start"],
-            "endTime": self.config["end"],
-            "admId": self.app_id
+            "startTime": str(self.config["start"]),
+            "endTime": str(self.config["end"]),
+            "admId": [self.app_id]
         }
-        cfg = {}
-        cfg.update(self.config)
-        del cfg["start"]
-        del cfg["end"]
-        body = cfg
-        value, unit = self._time
-        if unit == "days" and type(self._time) is list:
-            self.config["start"] -= value
-        elif self.config["end"] > self.config["start"]:
-            self.config["start"] = self.config["end"]
-        else:
-            raise Exception("Assemble body error.")
+        body.update(self.config)
+        del body["start"]
+        del body["end"]
+    
+
 
         return body
 

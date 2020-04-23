@@ -5,8 +5,9 @@ import json
 from . import query
 class Client(object):
     def __init__(self, username, password, is_2fa_auth=False):
-        self._session = requests.Session()
         self.is_2fa_auth = is_2fa_auth
+
+        self._session = requests.Session()
         self._options = {
             "base_url": "https://appstoreconnect.apple.com/olympus/v1",
             "login_url": "https://idmsa.apple.com/appleauth/auth",
@@ -30,9 +31,9 @@ class Client(object):
         }
         headers = {
             'Content-Type': 'application/json',
-            'X-Apple-Widget-Key': self.options["apple_widget_key"]
+            'X-Apple-Widget-Key': self._options["apple_widget_key"]
         }
-        r = self._session.post(self.options["login_url"] + "/signin", json=payload, headers=headers)
+        r = self._session.post(self._options["login_url"] + "/signin", json=payload, headers=headers)
         
         headers = {
             'Content-Type': 'application/json',
@@ -48,13 +49,13 @@ class Client(object):
         if self.is_2fa_auth:
             print("Enter the 2FA code:")
             two_factor_auth_code = input()
-            self._session.post(self.options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
-        r = self._session.post(self.options["login_url"] + "/2sv/trust", headers=headers)
+            self._session.post(self._options["login_url"] + "/verify/trusteddevice/securitycode", headers=headers, data={'securityCode': {'code': two_factor_auth_code}})
+        r = self._session.post(self._options["login_url"] + "/2sv/trust", headers=headers)
         cookies = r.headers['set-cookie']
         if cookies is None or len(cookies) == 0:
             raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
 
-        self._session.get(self.options["base_url"] + "/session", allow_redirects=False)
+        self._session.get(self._options["base_url"] + "/session", allow_redirects=False)
         if 'myacinfo' not in self._session.cookies.get_dict().keys():
             raise Exception("There was a problem with loading the login page cookies. Check login credentials.")
 
@@ -76,19 +77,33 @@ class Client(object):
 
 
     def change_provider(self, provider_id):
+        # TODO: check the workking currect.
         data = {'provider': {'providerId': provider_id}}
-        self._session.post(url=self.options["base_url"]) 
+        self._session.post(url=self._options["base_url"]) 
 
 
     def execute(self, query=None):
         request_body = query.assemble_body()
-        parsed_url = urlparse(query.api_url + query.end_point)
-        headers = self.get_headers()
-        res = self._session.post(parsed_url.geturl(), headers=headers, timeout=300000, json=request_body)
+        print(query.analytics_url)
+        res = self._session.post(query.analytics_url, headers=self._headers, timeout=300000, json=request_body)
         if res.status_code == 401:
             raise Exception("This request requires authentication. Please check your username and password.")
         if res.status_code == 400:
             print(request_body)
-            print(res.headers)
             raise Exception("400 Bad Request.")
         return res
+    
+
+    def debug_analytics(self):
+        body = {
+            "startTime": "2020-04-21T00:00:000Z",
+            "endTime": "2020-04-22T00:00:000Z",
+            "adamId": ["1318551883"],
+            "group": None,
+            "frequency": "DAY",
+            "dimensionFilters": [],
+            "measures": ["installs", "crashes"],
+        }
+        url = "https://analytics.itunes.apple.com/analytics/api/v1/data/time-series"
+        res = self._session.post(url, json=body, headers=self._headers)
+        print(res.json())
