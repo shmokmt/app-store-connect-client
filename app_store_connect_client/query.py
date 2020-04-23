@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from urllib.parse import urlparse
-from .dataclass import 
+from .dataclass import measures
 
 class Query(object):
     def __init__(self, app_id):
@@ -14,7 +14,6 @@ class Query(object):
         }
         self._api_url = "https://analytics.itunes.apple.com/analytics/api/v1"
         self._end_point = None
-        self._time = None
 
     @property
     def analytics_url(self):
@@ -22,7 +21,7 @@ class Query(object):
 
     def _clean_config(self, keys):
         for key in keys:
-            if config.get(key):
+            if self.config.get(key):
                 del self.config[key]
 
     def metrics(self, config):
@@ -34,8 +33,8 @@ class Query(object):
             self.config["dimensionFilters"] = []
         if not self.config.get("measures"):
             self.config["measures"] = [
-                .Measures.installs.value,
-                enum.Measures.crashes.value,
+                measures.installs,
+                measures.crashes,
             ]
         return self
 
