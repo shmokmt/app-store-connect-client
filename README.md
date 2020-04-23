@@ -1,10 +1,10 @@
-# app store connect client(WIP)
+# app store connect client
 
 Python package for App Store Connect API.
 
 It supports Python3.7+.
 
-The complete documentation is here.
+The complete documentation is [here](https://github.com/shmokmt/app-store-connect-client/wiki).
 
 ## Installation
 
@@ -62,9 +62,10 @@ response
 ### TODO
 * More tests
 * Support DataFrame Output
-* Support 2FA Authentication.
+* Support 2FA Authentication
 * Docstring
 * readthedoc
+* Support Review API
 
 ### Related Projects
 
@@ -76,4 +77,4 @@ response
 
 ### LICENSE
 
-MIT
+[MIT](https://github.com/shmokmt/app-store-connect-client/blob/master/LICENSE)
