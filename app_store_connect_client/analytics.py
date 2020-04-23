@@ -1,7 +1,6 @@
 import requests
 from urllib.parse import urlparse
 import json
-
 from . import query
 class Client(object):
     def __init__(self, username, password, is_2fa_auth=False):
@@ -84,26 +83,9 @@ class Client(object):
 
     def execute(self, query=None):
         request_body = query.assemble_body()
-        print(query.analytics_url)
         res = self._session.post(query.analytics_url, headers=self._headers, timeout=300000, json=request_body)
         if res.status_code == 401:
             raise Exception("This request requires authentication. Please check your username and password.")
         if res.status_code == 400:
-            print(request_body)
-            raise Exception("400 Bad Request.")
-        return res
-    
-
-    def debug_analytics(self):
-        body = {
-            "startTime": "2020-04-21T00:00:000Z",
-            "endTime": "2020-04-22T00:00:000Z",
-            "adamId": ["1318551883"],
-            "group": None,
-            "frequency": "DAY",
-            "dimensionFilters": [],
-            "measures": ["installs", "crashes"],
-        }
-        url = "https://analytics.itunes.apple.com/analytics/api/v1/data/time-series"
-        res = self._session.post(url, json=body, headers=self._headers)
-        print(res.json())
+            raise Exception("400 Bad Request. Please check your config.")
+        return res.json()
