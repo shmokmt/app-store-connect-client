@@ -15,27 +15,28 @@ pip install app-store-connect-client
 ## Getting Started
 
 ```python
-from app_store_connect_client import Client, Query
+import app_store_connect_client as app_store
+import json
+
 
 app_id = '12345'
-client = Client(username="XXX", password="XXX)
-
+client = app_store.Client(username="XXX", password="XXX)
 # Getting account informantion
 client.get_apps()
-
-
 # more setting info.
 client.get_settings() 
-
-# query
+# query config.
 config = {
-    'measures': itc.measures.units
+    'measures': app_store.measures.units
 }
-
 query = Query.metrics(app_id, config).date('2016-04-10', '2016-05-10')
-
-client.execute(query)
+results = client.execute(query)
+print(results, indent=4)
 ```
+
+### TODO
+* More tests
+* Support DataFrame Output
 
 ### Related Projects
 
