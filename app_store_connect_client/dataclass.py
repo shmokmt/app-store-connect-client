@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class Frequency:
     days: str
@@ -58,6 +59,7 @@ class Platform:
     ipad: str
     ipod: str
     apple_tv: str
+
 
 @dataclass(frozen=True)
 class QueryType:
