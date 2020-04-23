@@ -74,16 +74,15 @@ class Client(object):
                 "No itCtx cookie :( Apple probably changed the login process"
             )
 
-    def _get_api_url(self, url):
-        res = self.session.get(url, headers=self._headers, timeout=500)
-
     def get_apps(self):
-        url = self.options["settings_url"] + "/app-info/all"
-        self._get_api_url(url)
+        url = self._options["settings_url"] + "/app-info/all"
+        res = self._session.get(url, headers=self._headers, timeout=500)
+        return res.json()
 
     def get_settings(self):
-        url = self.options["settings_url"] + "/settings/all"
-        self._get_api_url(url)
+        url = self._options["settings_url"] + "/settings/all"
+        res = self._session.get(url, headers=self._headers, timeout=500)
+        return res.json()
 
     def change_provider(self, provider_id):
         # TODO: check the workking currect.
@@ -103,5 +102,6 @@ class Client(object):
                 "This request requires authentication. Please check your username and password."
             )
         if res.status_code == 400:
+            print(request_body)
             raise Exception("400 Bad Request. Please check your config.")
         return res.json()
