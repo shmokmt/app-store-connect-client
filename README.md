@@ -21,15 +21,11 @@ import json
 
 app_id = '12345'
 client = app_store.Client(username="XXX", password="XXX)
-# Getting account informantion
-client.get_apps()
-# more setting info.
-client.get_settings() 
 # query config.
 config = {
-    'measures': app_store.measures.units
+    'measures': app_store.measures.installs
 }
-query = Query.metrics(app_id, config).date('2016-04-10', '2016-05-10')
+query = Query.metrics(app_id, config).date('2016-04-01', '2016-04-02')
 results = client.execute(query)
 print(results, indent=4)
 ```
@@ -59,15 +55,16 @@ response
 }
 ```
 
-### TODO
+## TODO
 * More tests
-* Support DataFrame Output
 * Support 2FA Authentication
 * Docstring
-* readthedoc
+* readthedocs
 * Support Review API
+* Use async / await
+* group by method
 
-### Related Projects
+## Related Projects
 
 * [stoprocent/node-itunesconnect](https://github.com/stoprocent/node-itunesconnect)
 * [JanHalozan/iTunesConnectAnalytics](https://github.com/JanHalozan/iTunesConnectAnalytics)
@@ -75,6 +72,10 @@ response
 * [simongcx/pytunesconnect](https://github.com/simongcx/pytunesconnect)
 * [elyticscode/itc_analytics](https://github.com/elyticscode/itc_analytics)
 
-### LICENSE
+## LICENSE
 
 [MIT](https://github.com/shmokmt/app-store-connect-client/blob/master/LICENSE)
+
+
+## Authors
+* [shmokmt](https://github.com/shmokmt)
