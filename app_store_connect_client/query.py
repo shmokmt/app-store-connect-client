@@ -1,13 +1,14 @@
 from datetime import date, datetime
 from urllib.parse import urlparse
 from .dataclass import measures
+from dataclasses import dataclass
 
 class Query(object):
     def __init__(self, app_id):
-        self.app_id = app_id
         self.config = {
-            "start": None,
-            "end": None,
+            "startTime": None,
+            "endTime": None,
+            "adamId": [app_id],
             "group": None,
             "frequency": "DAY",
             "dimensionFilters": [],
@@ -25,6 +26,7 @@ class Query(object):
                 del self.config[key]
 
     def metrics(self, config):
+        # need: measures
         self._end_point = "/data/time-series"
         self._clean_config(["limit", "dimension"])
         if not self.config.get("group"):
@@ -32,26 +34,20 @@ class Query(object):
         if not self.config.get("dimensionFilters"):
             self.config["dimensionFilters"] = []
         if not self.config.get("measures"):
-            self.config["measures"] = [
-                measures.installs,
-                measures.crashes,
-            ]
+            self.config["measures"] = config["measures"]
         return self
 
-    def sources(self, config):
-        # config で measures と dimension が主に入ってくるのかな？
+    def sources(self, config=None):
+        # needs: dimension and measures
         self._end_point = "/data/sources/list"
-        self._clean_config(["limit", "group", "dimensionFilters"])
         if not self.config.get("limit"):
             self.config["limit"] = 200
         if not self.config.get("dimension"):
             self.config["dimension"] = "domainReferer"
-        self.config.update(config)
+        if config:
+            self.config.update(config)
         return self
     
-    def limit(self, limit=200):
-        self.config["limit"] = limit
-
     def _validate_date(self, start, end):
         try:
             datetime.strptime(start, "%Y-%m-%d")
@@ -63,12 +59,12 @@ class Query(object):
     def date(self, start, end=None):
         # TODO: Support datetime
         self._validate_date(start, end)
-        self.config["start"] = start + "T00:00:000Z"
-        self.config["end"] = end + "T00:00:000Z"
+        self.config["startTime"] = start + "T00:00:000Z"
+        self.config["endTime"] = end + "T00:00:000Z"
         return self
 
+    def _validate_schema(self):
+        pass
+
     def assemble_body(self):
-        self.config["adamId"] = [self.app_id]
-        self.config["startTime"] = self.config.pop("start")
-        self.config["endTime"] = self.config.pop("end")
         return self.config
