@@ -84,13 +84,13 @@ class Client(object):
         res = self._session.get(url, headers=self._headers, timeout=500)
         return res.json()
 
-    def change_provider(self, provider_id):
-        # TODO: check the workking currect.
-        data = {"provider": {"providerId": provider_id}}
-        self._session.post(url=self._options["base_url"])
+    # TODO: Impl. below method.
+    # def change_provider(self, provider_id):
+    #     data = {"provider": {"providerId": provider_id}}
+    #     self._session.post(url=self._options["base_url"])
 
     def execute(self, query=None):
-        request_body = query.assemble_body()
+        request_body = query.config
         res = self._session.post(
             query.analytics_url,
             headers=self._headers,

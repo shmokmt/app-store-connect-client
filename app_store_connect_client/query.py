@@ -57,14 +57,7 @@ class Query(object):
             raise ValueError("Incorrect format, shoube be YYYY-MM-DD.")
 
     def date(self, start, end=None):
-        # TODO: Support datetime
         self._validate_date(start, end)
         self.config["startTime"] = start + "T00:00:000Z"
         self.config["endTime"] = end + "T00:00:000Z"
         return self
-
-    def _validate_schema(self):
-        pass
-
-    def assemble_body(self):
-        return self.config
