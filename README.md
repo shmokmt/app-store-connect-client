@@ -62,6 +62,9 @@ response
 ### TODO
 * More tests
 * Support DataFrame Output
+* Support 2FA Authentication.
+* Docstring
+* readthedoc
 
 ### Related Projects
 
