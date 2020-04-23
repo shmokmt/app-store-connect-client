@@ -95,7 +95,7 @@ dimension = Dimension(
     platform_version="platformVersion",
     region="region",
     territory="storefront",
-    websites="domainRefferer",
+    websites="domainReferrer",
     apps="appReferrer",
     source_type="source",
 )
