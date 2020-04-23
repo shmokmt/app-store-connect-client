@@ -30,7 +30,8 @@ results = client.execute(query)
 print(results, indent=4)
 ```
 
-response
+### response
+
 ```json
 {
     "size": 1,
