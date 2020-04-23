@@ -36,3 +36,15 @@ query = Query.metrics(app_id, config).date('2016-04-10', '2016-05-10')
 
 client.execute(query)
 ```
+
+### Related Projects
+
+* [stoprocent/node-itunesconnect](https://github.com/stoprocent/node-itunesconnect)
+* [JanHalozan/iTunesConnectAnalytics](https://github.com/JanHalozan/iTunesConnectAnalytics)
+* [Donohue/itc_analytics](https://github.com/Donohue/itc_analytics)
+* [simongcx/pytunesconnect](https://github.com/simongcx/pytunesconnect)
+* [elyticscode/itc_analytics](https://github.com/elyticscode/itc_analytics)
+
+### LICENSE
+
+MIT
