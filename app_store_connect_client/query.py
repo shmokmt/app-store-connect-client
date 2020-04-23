@@ -1,6 +1,6 @@
-import enum
 from datetime import date, datetime
 from urllib.parse import urlparse
+from . import enum
 class Query(object):
     def __init__(self, app_id):
         self.app_id = app_id
@@ -28,6 +28,8 @@ class Query(object):
             self.config["group"] = None
         if not self.config.get("dimensionFilters"):
             self.config["dimensionFilters"] = []
+        if not self.config.get("measures"):
+            self.config["measures"] = [enum.Measures.installs.value, enum.Measures.crashes.value]
         return self
     
     def sources(self, config):
@@ -39,14 +41,13 @@ class Query(object):
             self.config["limit"] = 200
         if not self.config.get("dimension"):
             self.config["dimension"] = "domainReferer"
-        if not self.config.get("measures"):
-            self.config["measures"] = ["installs"]
+        self.config.update(config)
         return self
+    
 
     def date(self, start, end=None):
         self.config["start"] = start
-        if end is not None:
-            self.config["end"] = start
+        self.config["end"] = end
         return self
         
 
@@ -54,13 +55,10 @@ class Query(object):
         body = {
             "startTime": str(self.config["start"]),
             "endTime": str(self.config["end"]),
-            "admId": [self.app_id]
+            "adamId": [self.app_id]
         }
         body.update(self.config)
         del body["start"]
         del body["end"]
-    
-
-
         return body
 
