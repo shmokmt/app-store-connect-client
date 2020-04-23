@@ -34,6 +34,31 @@ results = client.execute(query)
 print(results, indent=4)
 ```
 
+response
+```
+{
+    "size": 1,
+    "results": [
+        {
+            "adamId": "12345678",
+            "meetsThreshold": true,
+            "group": null,
+            "data": [
+                {
+                    "date": "2020-04-01T00:00:00Z",
+                    "installs": 50.0
+                }
+            ],
+            "totals": {
+                "value": 50.0,
+                "type": "COUNT",
+                "key": "installs"
+            }
+        }
+    ]
+}
+```
+
 ### TODO
 * More tests
 * Support DataFrame Output
