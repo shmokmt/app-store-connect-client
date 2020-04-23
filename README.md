@@ -35,7 +35,7 @@ print(results, indent=4)
 ```
 
 response
-```
+```json
 {
     "size": 1,
     "results": [
