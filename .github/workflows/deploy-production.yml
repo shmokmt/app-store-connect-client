@@ -1,8 +1,6 @@
 name: Upload the Python package to PyPI.
 on: 
   push:
-    branches:
-      - master
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
 jobs:
