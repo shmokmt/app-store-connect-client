@@ -84,10 +84,10 @@ class Client(object):
         res = self._session.get(url, headers=self._headers, timeout=500)
         return res.json()
 
-    # TODO: Impl. below method.
-    # def change_provider(self, provider_id):
-    #     data = {"provider": {"providerId": provider_id}}
-    #     self._session.post(url=self._options["base_url"])
+    def change_provider(self, provider_id):
+        data = {"provider": {"providerId": provider_id}}
+        self._session.post(url=self._options["base_url"] + "/session", json=data, headers=self._headers)
+
 
     def execute(self, query=None):
         request_body = query.config
