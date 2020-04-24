@@ -25,12 +25,12 @@ client = app_store.Client(username="XXX", password="XXX)
 config = {
     'measures': app_store.measures.installs
 }
-query = Query.metrics(app_id, config).date('2016-04-01', '2016-04-02')
+query = app_store.Query.metrics(app_id, config).date('2016-04-01', '2016-04-02')
 results = client.execute(query)
-print(results, indent=4)
+print(json.dumps(results, indent=4))
 ```
 
-### response
+### results
 
 ```json
 {
@@ -63,7 +63,7 @@ print(results, indent=4)
 * readthedocs
 * Support Review API
 * Use async / await
-* group by method
+* Support changing provider
 
 ## Related Projects
 
