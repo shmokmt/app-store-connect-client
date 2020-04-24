@@ -2,6 +2,8 @@
 
 Python package for App Store Connect API.
 
+![python_version](https://img.shields.io/pypi/pyversions/app-store-connect-client)   ![LICENSE](https://img.shields.io/pypi/l/app-store-connect-client)
+
 It supports Python3.7+.
 
 The complete documentation is [here](https://github.com/shmokmt/app-store-connect-client/wiki).
