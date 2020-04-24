@@ -25,7 +25,7 @@ client = app_store.Client(username="XXX", password="XXX)
 config = {
     'measures': app_store.measures.installs
 }
-query = app_store.Query.metrics(app_id, config).date('2016-04-01', '2016-04-02')
+query = app_store.Query(app_id).metrics(config).date('2016-04-01', '2016-04-02')
 results = client.execute(query)
 print(json.dumps(results, indent=4))
 ```
@@ -58,12 +58,12 @@ print(json.dumps(results, indent=4))
 
 ## TODO
 * More tests
+* More Example
+* More docs
 * Support 2FA Authentication
 * Docstring
-* readthedocs
 * Support Review API
 * Use async / await
-* Support changing provider
 
 ## Related Projects
 
