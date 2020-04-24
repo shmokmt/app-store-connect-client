@@ -25,9 +25,7 @@ jobs:
       - name: Set PyPI Config
         env:
           PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
-        run: |
-        poetry config http-basic.testpypi shmokmt "$PASSWORD"
-        run: poetry config repositories.tstpypi https://test.pypi.org/legacy/
+        run: poetry config http-basic.testpypi shmokmt "$PASSWORD" && poetry config repositories.tstpypi https://test.pypi.org/legacy/
 
       - name: Install Dependencies
         run: poetry install
