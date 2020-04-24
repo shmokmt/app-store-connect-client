@@ -1,13 +1,17 @@
 import requests
+from requests.exceptions import Timeout
 from urllib.parse import urlparse
 import json
 from . import query
+from .log import logger
 
 
 class Client(object):
     def __init__(self, username, password, is_2fa_auth=False):
         self.is_2fa_auth = is_2fa_auth
 
+        self._username = username
+        self._passowrd = password
         self._session = requests.Session()
         self._options = {
             "base_url": "https://appstoreconnect.apple.com/olympus/v1",
@@ -98,10 +102,13 @@ class Client(object):
             json=request_body,
         )
         if res.status_code == 401:
+            logger.error(f"usename: {self._username}")
+            logger.error(f"password: {self._password}")
             raise Exception(
                 "This request requires authentication. Please check your username and password."
             )
         if res.status_code == 400:
-            print(request_body)
+            logger.error("This is your request body.")
+            logger.error(request_body)
             raise Exception("400 Bad Request. Please check your config.")
         return res.json()
