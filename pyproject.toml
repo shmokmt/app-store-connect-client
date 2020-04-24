@@ -3,7 +3,16 @@ name = "app-store-connect-client"
 version = "0.1.0"
 description = "Python package for App Store connect Analytics."
 authors = ["shmokmt <shoma.okamoto@fuller.co.jp>"]
+homepage = "https://github.com/shmokmt"
+repository = "https://github.com/shmokmt/app-store-connect-client"
+documentation = "https://github.com/shmokmt/app-store-connect-client/wiki"
 license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3.7",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Utilities",
+    "Topic :: Internet :: WWW/HTTP",
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
