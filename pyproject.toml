@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "app-store-connect-client"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python package for App Store connect Analytics."
 authors = ["shmokmt <shoma.okamoto@fuller.co.jp>"]
 homepage = "https://github.com/shmokmt"

@@ -1,7 +1,12 @@
-name: test
-on: [push]
+name: Upload the Python package to PyPI.
+on: 
+  push:
+    branches:
+      - master
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
 jobs:
-  test:
+  upload-pypi:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -18,13 +23,15 @@ jobs:
         run: |
           poetry config virtualenvs.in-project false
           poetry config virtualenvs.path ~/.virtualenvs
-      
+
       - name: Install Dependencies
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
       
-      - name: Code Quality
-        run: poetry run black . --check
+      - name: Build Package
+        run: poetry build
       
-      - name: Test with pytest
-        run: poetry run pytest
+      - name: Upload to PyPI
+        env:
+          PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: poetry publish -u shmokmt -p "$PASSWORD"

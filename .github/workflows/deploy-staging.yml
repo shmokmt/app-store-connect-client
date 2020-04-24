@@ -1,0 +1,38 @@
+name: Upload the Python package to Test PyPI.
+on: 
+  push:
+    branches:
+      - release
+jobs:
+  upload-testpypi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install Poetry
+        uses: dschep/install-poetry-action@v1.2
+
+      - name: Set Poetry config
+        run: |
+          poetry config virtualenvs.in-project false
+          poetry config virtualenvs.path ~/.virtualenvs
+
+      - name: Set PyPI Config
+        env:
+          PASSWORD: ${{ secrets.TESTPYPI_PASSWORD }}
+        run: poetry config http-basic.testpypi shmokmt "$PASSWORD" && poetry config repositories.testpypi https://test.pypi.org/legacy/
+
+      - name: Install Dependencies
+        run: poetry install
+        if: steps.cache.outputs.cache-hit != 'true'
+      
+      - name: Build Package
+        run: poetry build
+      
+      - name: Upload to Test PyPI
+        run: poetry publish -r testpypi
