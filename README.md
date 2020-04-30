@@ -4,7 +4,7 @@ Python package for App Store Connect API.
 
 ![python_version](https://img.shields.io/pypi/pyversions/app-store-connect-client)   ![LICENSE](https://img.shields.io/pypi/l/app-store-connect-client)
 
-It supports Python3.7+.
+It supports Python3.6.1+.
 
 The complete documentation is [here](https://github.com/shmokmt/app-store-connect-client/wiki).
 
@@ -65,7 +65,11 @@ print(json.dumps(results, indent=4))
 * Support 2FA Authentication
 * Docstring
 * Support Review API
-* Use async / await
+
+## Credit
+
+* [JanHalozan/iTunesConnectAnalytics](https://github.com/JanHalozan/iTunesConnectAnalytics)
+
 
 ## Related Projects
 
