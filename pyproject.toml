@@ -20,6 +20,10 @@ requests = "^2.23.0"
 black = "^19.10b0"
 python-dotenv = "^0.13.0"
 
+[tool.poetry-dynamic-versioning]
+enable = true
+style = "pep440"
+
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.1"
 rope = "^0.16.0"
