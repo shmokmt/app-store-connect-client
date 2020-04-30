@@ -2,7 +2,8 @@ import requests
 from requests.exceptions import Timeout
 from urllib.parse import urlparse
 import json
-from . import query
+import jsonschema
+from . import query, exceptions
 from .log import logger
 
 
@@ -113,4 +114,10 @@ class Client(object):
             logger.error("This is your request body.")
             logger.error(request_body)
             raise Exception("400 Bad Request. Please check your config.")
+        with open(f'app_store_connect_client/jsonschema/{query.type}.json') as f:
+            schema = json.load(f)
+        try:
+            jsonschema.validate(res.json(), schema)
+        except jsonschema.exceptions.ValidationError:
+            raise exceptions.ValidationError("ERROR: response jsonschema is invalid.")
         return res.json()
