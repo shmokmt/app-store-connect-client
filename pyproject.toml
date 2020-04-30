@@ -8,6 +8,7 @@ repository = "https://github.com/shmokmt/app-store-connect-client"
 documentation = "https://github.com/shmokmt/app-store-connect-client/wiki"
 license = "MIT"
 classifiers = [
+    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "License :: OSI Approved :: MIT License",
     "Topic :: Utilities",
