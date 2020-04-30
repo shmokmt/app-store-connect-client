@@ -53,14 +53,16 @@ class Client(object):
         if self.is_2fa_auth:
             print("Enter the 2FA code:")
             two_factor_auth_code = input()
-            self._session.post(
+            r = self._session.post(
                 self._options["login_url"] + "/verify/trusteddevice/securitycode",
                 headers=headers,
-                data={"securityCode": {"code": two_factor_auth_code}},
+                json={"securityCode": {"code": two_factor_auth_code}},
             )
-        r = self._session.post(
-            self._options["login_url"] + "/2sv/trust", headers=headers
-        )
+            if r.status_code != 200:
+                raise Exception("two factor auth code is invalid.")
+            self._session.get(
+                self._options["login_url"] + "/2sv/trust", headers=headers
+            )
         cookies = r.headers["set-cookie"]
         if cookies is None or len(cookies) == 0:
             raise Exception(

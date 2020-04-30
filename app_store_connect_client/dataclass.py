@@ -1,15 +1,13 @@
-from dataclasses import dataclass
+from typing import NamedTuple
 
 
-@dataclass(frozen=True)
-class Frequency:
+class Frequency(NamedTuple):
     days: str
     weekly: str
     monthly: str
 
 
-@dataclass(frozen=True)
-class Measures:
+class Measures(NamedTuple):
     installs: str
     uninstalls: str
     sessions: str
@@ -26,8 +24,7 @@ class Measures:
     page_view_unique: str
 
 
-@dataclass(frozen=True)
-class Dimension:
+class Dimension(NamedTuple):
     app_version: str
     campaigns: str
     device: str
@@ -39,8 +36,7 @@ class Dimension:
     source_type: str
 
 
-@dataclass(frozen=True)
-class DimensionFilterKey:
+class DimensionFilterKey(NamedTuple):
     app_purchase_week: str
     app_purchase_day: str
     app_purchase_month: str
@@ -53,16 +49,14 @@ class DimensionFilterKey:
     websites: str
 
 
-@dataclass(frozen=True)
-class Platform:
+class Platform(NamedTuple):
     iphone: str
     ipad: str
     ipod: str
     apple_tv: str
 
 
-@dataclass(frozen=True)
-class QueryType:
+class QueryType(NamedTuple):
     sources: str
     metrics: str
 
