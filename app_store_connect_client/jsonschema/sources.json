@@ -1,0 +1,409 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "additionalProperties": true,
+    "required": [
+        "size",
+        "results",
+        "meetsThreshold"
+    ],
+    "properties": {
+        "size": {
+            "$id": "#/properties/size",
+            "type": "integer",
+            "title": "The Size Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                7.0
+            ]
+        },
+        "results": {
+            "$id": "#/properties/results",
+            "type": "array",
+            "title": "The Results Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/74/53/9c/74539c6b-fffa-e1a3-acb9-42fb23ccdcb5/Icon-Production-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/340x340bb-80.png",
+                        "startTime": "2020-03-30T00:00:00Z",
+                        "appReferrer": "com.facebook.Facebook",
+                        "allLocKey": null,
+                        "assetToken": "Purple123/v4/74/53/9c/74539c6b-fffa-e1a3-acb9-42fb23ccdcb5/Icon-Production-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png",
+                        "endTime": "2020-04-01T00:00:00Z",
+                        "platforms": [
+                            "iOS",
+                            "tvOS"
+                        ],
+                        "adamId": "1318551883",
+                        "title": "Facebook",
+                        "id": "com.facebook.Facebook",
+                        "data": {
+                            "units": {
+                                "previousValue": 0.0,
+                                "percentChange": 0.0,
+                                "value": 3.0
+                            }
+                        },
+                        "titleLocKey": null
+                    },
+                    {
+                        "id": "com.google.GoogleMobile",
+                        "data": {
+                            "units": {
+                                "previousValue": 4.0,
+                                "percentChange": -0.25,
+                                "value": 3.0
+                            }
+                        },
+                        "titleLocKey": null,
+                        "iconUrl": "https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/52/cd/07/52cd0710-a240-e2d3-4985-9f265de1d1f8/logo_gsa_ios_color-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/340x340bb-80.png",
+                        "startTime": "2020-03-30T00:00:00Z",
+                        "appReferrer": "com.google.GoogleMobile",
+                        "allLocKey": null,
+                        "assetToken": "Purple123/v4/52/cd/07/52cd0710-a240-e2d3-4985-9f265de1d1f8/logo_gsa_ios_color-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png",
+                        "endTime": "2020-04-01T00:00:00Z",
+                        "platforms": [
+                            "iOS",
+                            "tvOS"
+                        ],
+                        "adamId": "1318551883",
+                        "title": "Google"
+                    },
+                    {
+                        "allLocKey": null,
+                        "assetToken": "Purple113/v4/32/ec/7f/32ec7f94-50e3-363d-82b6-38e7864779d4/Prod-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png",
+                        "endTime": "2020-04-01T00:00:00Z",
+                        "platforms": [
+                            "iOS"
+                        ],
+                        "adamId": "1318551883",
+                        "title": "Instagram",
+                        "id": "com.burbn.instagram",
+                        "data": {
+                            "units": {
+                                "previousValue": 0.0,
+                                "percentChange": 0.0,
+                                "value": 1.0
+                            }
+                        },
+                        "titleLocKey": null,
+                        "iconUrl": "https://is4-ssl.mzstatic.com/image/thumb/Purple113/v4/32/ec/7f/32ec7f94-50e3-363d-82b6-38e7864779d4/Prod-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/340x340bb-80.png",
+                        "startTime": "2020-03-30T00:00:00Z",
+                        "appReferrer": "com.burbn.instagram"
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/results/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                    {
+                        "adamId": "1318551883",
+                        "title": "Facebook",
+                        "id": "com.facebook.Facebook",
+                        "data": {
+                            "units": {
+                                "previousValue": 0.0,
+                                "percentChange": 0.0,
+                                "value": 3.0
+                            }
+                        },
+                        "titleLocKey": null,
+                        "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/74/53/9c/74539c6b-fffa-e1a3-acb9-42fb23ccdcb5/Icon-Production-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/340x340bb-80.png",
+                        "startTime": "2020-03-30T00:00:00Z",
+                        "appReferrer": "com.facebook.Facebook",
+                        "allLocKey": null,
+                        "assetToken": "Purple123/v4/74/53/9c/74539c6b-fffa-e1a3-acb9-42fb23ccdcb5/Icon-Production-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png",
+                        "endTime": "2020-04-01T00:00:00Z",
+                        "platforms": [
+                            "iOS",
+                            "tvOS"
+                        ]
+                    },
+                    {
+                        "adamId": "1318551883",
+                        "title": "Google",
+                        "id": "com.google.GoogleMobile",
+                        "data": {
+                            "units": {
+                                "percentChange": -0.25,
+                                "value": 3.0,
+                                "previousValue": 4.0
+                            }
+                        },
+                        "titleLocKey": null,
+                        "iconUrl": "https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/52/cd/07/52cd0710-a240-e2d3-4985-9f265de1d1f8/logo_gsa_ios_color-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/340x340bb-80.png",
+                        "startTime": "2020-03-30T00:00:00Z",
+                        "appReferrer": "com.google.GoogleMobile",
+                        "allLocKey": null,
+                        "assetToken": "Purple123/v4/52/cd/07/52cd0710-a240-e2d3-4985-9f265de1d1f8/logo_gsa_ios_color-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png",
+                        "endTime": "2020-04-01T00:00:00Z",
+                        "platforms": [
+                            "iOS",
+                            "tvOS"
+                        ]
+                    },
+                    {
+                        "platforms": [
+                            "iOS"
+                        ],
+                        "adamId": "1318551883",
+                        "title": "Instagram",
+                        "id": "com.burbn.instagram",
+                        "data": {
+                            "units": {
+                                "previousValue": 0.0,
+                                "percentChange": 0.0,
+                                "value": 1.0
+                            }
+                        },
+                        "titleLocKey": null,
+                        "iconUrl": "https://is4-ssl.mzstatic.com/image/thumb/Purple113/v4/32/ec/7f/32ec7f94-50e3-363d-82b6-38e7864779d4/Prod-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/340x340bb-80.png",
+                        "startTime": "2020-03-30T00:00:00Z",
+                        "appReferrer": "com.burbn.instagram",
+                        "allLocKey": null,
+                        "assetToken": "Purple113/v4/32/ec/7f/32ec7f94-50e3-363d-82b6-38e7864779d4/Prod-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png",
+                        "endTime": "2020-04-01T00:00:00Z"
+                    }
+                ],
+                "additionalProperties": true,
+                "required": [
+                    "adamId",
+                    "startTime",
+                    "endTime",
+                    "data",
+                    "id",
+                    "title",
+                    "titleLocKey",
+                    "allLocKey",
+                    "iconUrl",
+                    "assetToken",
+                    "platforms",
+                    "appReferrer"
+                ],
+                "properties": {
+                    "adamId": {
+                        "$id": "#/properties/results/items/properties/adamId",
+                        "type": "string",
+                        "title": "The Adamid Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "1318551883"
+                        ]
+                    },
+                    "startTime": {
+                        "$id": "#/properties/results/items/properties/startTime",
+                        "type": "string",
+                        "title": "The Starttime Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "2020-03-30T00:00:00Z"
+                        ]
+                    },
+                    "endTime": {
+                        "$id": "#/properties/results/items/properties/endTime",
+                        "type": "string",
+                        "title": "The Endtime Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "2020-04-01T00:00:00Z"
+                        ]
+                    },
+                    "data": {
+                        "$id": "#/properties/results/items/properties/data",
+                        "type": "object",
+                        "title": "The Data Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "units": {
+                                    "previousValue": 0.0,
+                                    "percentChange": 0.0,
+                                    "value": 3.0
+                                }
+                            }
+                        ],
+                        "additionalProperties": true,
+                        "required": [
+                            "units"
+                        ],
+                        "properties": {
+                            "units": {
+                                "$id": "#/properties/results/items/properties/data/properties/units",
+                                "type": "object",
+                                "title": "The Units Schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "previousValue": 0.0,
+                                        "percentChange": 0.0,
+                                        "value": 3.0
+                                    }
+                                ],
+                                "additionalProperties": true,
+                                "required": [
+                                    "previousValue",
+                                    "value",
+                                    "percentChange"
+                                ],
+                                "properties": {
+                                    "previousValue": {
+                                        "$id": "#/properties/results/items/properties/data/properties/units/properties/previousValue",
+                                        "type": "number",
+                                        "title": "The Previousvalue Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            0.0
+                                        ]
+                                    },
+                                    "value": {
+                                        "$id": "#/properties/results/items/properties/data/properties/units/properties/value",
+                                        "type": "number",
+                                        "title": "The Value Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            3.0
+                                        ]
+                                    },
+                                    "percentChange": {
+                                        "$id": "#/properties/results/items/properties/data/properties/units/properties/percentChange",
+                                        "type": "number",
+                                        "title": "The Percentchange Schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            0.0
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "id": {
+                        "$id": "#/properties/results/items/properties/id",
+                        "type": "string",
+                        "title": "The Id Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "com.facebook.Facebook"
+                        ]
+                    },
+                    "title": {
+                        "$id": "#/properties/results/items/properties/title",
+                        "type": "string",
+                        "title": "The Title Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "Facebook"
+                        ]
+                    },
+                    "titleLocKey": {
+                        "$id": "#/properties/results/items/properties/titleLocKey",
+                        "type": "null",
+                        "title": "The Titlelockey Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": null,
+                        "examples": [
+                            null
+                        ]
+                    },
+                    "allLocKey": {
+                        "$id": "#/properties/results/items/properties/allLocKey",
+                        "type": "null",
+                        "title": "The Alllockey Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": null,
+                        "examples": [
+                            null
+                        ]
+                    },
+                    "iconUrl": {
+                        "$id": "#/properties/results/items/properties/iconUrl",
+                        "type": "string",
+                        "title": "The Iconurl Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/74/53/9c/74539c6b-fffa-e1a3-acb9-42fb23ccdcb5/Icon-Production-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/340x340bb-80.png"
+                        ]
+                    },
+                    "assetToken": {
+                        "$id": "#/properties/results/items/properties/assetToken",
+                        "type": "string",
+                        "title": "The Assettoken Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "Purple123/v4/74/53/9c/74539c6b-fffa-e1a3-acb9-42fb23ccdcb5/Icon-Production-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png"
+                        ]
+                    },
+                    "platforms": {
+                        "$id": "#/properties/results/items/properties/platforms",
+                        "type": "array",
+                        "title": "The Platforms Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": [],
+                        "examples": [
+                            [
+                                "iOS",
+                                "tvOS"
+                            ]
+                        ],
+                        "additionalItems": true,
+                        "items": {
+                            "$id": "#/properties/results/items/properties/platforms/items",
+                            "type": "string",
+                            "title": "The Items Schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "iOS",
+                                "tvOS"
+                            ]
+                        }
+                    },
+                    "appReferrer": {
+                        "$id": "#/properties/results/items/properties/appReferrer",
+                        "type": "string",
+                        "title": "The Appreferrer Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "com.facebook.Facebook"
+                        ]
+                    }
+                }
+            }
+        },
+        "meetsThreshold": {
+            "$id": "#/properties/meetsThreshold",
+            "type": "boolean",
+            "title": "The Meetsthreshold Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": false,
+            "examples": [
+                true
+            ]
+        }
+    }
+}
