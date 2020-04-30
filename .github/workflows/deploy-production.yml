@@ -23,7 +23,7 @@ jobs:
           poetry config virtualenvs.path ~/.virtualenvs
 
       - name: Install poetry-dynamic-versioning
-          run: pip install poetry-dynamic-versioning
+        run: pip install poetry-dynamic-versioning
 
       - name: Install Dependencies
         run: poetry install
