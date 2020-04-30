@@ -1,6 +1,9 @@
 from datetime import date, datetime
 from urllib.parse import urlparse
-from .dataclass import measures
+from .dataclass import measures 
+from .dataclass import frequency
+from distutil.relativedelta import relativedelta
+from datetime import datetime
 from .exceptions import AppStoreConnectValueError
 class Query(object):
     def __init__(self, app_id):
@@ -60,7 +63,7 @@ class Query(object):
         except ValueError:
             raise AppStoreConnectValueError("Incorrect format, shoube be YYYY-MM-DD.")
 
-    def date(self, start, end=None):
+    def date_range(self, start, end=None):
         self._validate_date(start, end)
         self.config["startTime"] = start + "T00:00:000Z"
         if end is None:
@@ -69,3 +72,13 @@ class Query(object):
         else:
             self.config["endTime"] = end + "T00:00:000Z"
         return self
+    
+    def time_ago(self, value, freq=frequency.days):
+        now = datetime.now()
+        if freq == frequency.days:
+            start = now - relativedelta(days=value)
+        elif freq == frequency.weekly:
+            value *= 7
+            start = now - relativedelta(days=value)
+        elif freq == frequency.monthly:
+            start = now - relativedelta(months=value)
