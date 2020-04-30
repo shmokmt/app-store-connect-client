@@ -1,7 +1,6 @@
 from datetime import date, datetime
 from urllib.parse import urlparse
 from .dataclass import measures
-from dataclasses import dataclass
 
 class Query(object):
     def __init__(self, app_id):
@@ -59,5 +58,9 @@ class Query(object):
     def date(self, start, end=None):
         self._validate_date(start, end)
         self.config["startTime"] = start + "T00:00:000Z"
-        self.config["endTime"] = end + "T00:00:000Z"
+        if end is None:
+            # Only get start date.
+            self.config["endTime"] = start + "T00:01:000Z"
+        else:
+            self.config["endTime"] = end + "T00:00:000Z"
         return self
