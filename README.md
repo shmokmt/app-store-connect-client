@@ -65,6 +65,8 @@ print(json.dumps(results, indent=4))
 * Support 2FA Authentication
 * Docstring
 * Support Review API
+* Support group_by method
+* Support filter_by method
 
 ## Credit
 
