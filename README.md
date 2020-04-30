@@ -2,7 +2,7 @@
 
 Python package for App Store Connect API.
 
-![python_version](https://img.shields.io/pypi/pyversions/app-store-connect-client)   ![LICENSE](https://img.shields.io/pypi/l/app-store-connect-client)
+![python_version](https://img.shields.io/pypi/pyversions/app-store-connect-client) ![latest_version](https://img.shields.io/pypi/v/app-store-connect-client)  ![LICENSE](https://img.shields.io/pypi/l/app-store-connect-client)
 
 It supports Python3.6.1+.
 
@@ -65,6 +65,8 @@ print(json.dumps(results, indent=4))
 * Support 2FA Authentication
 * Docstring
 * Support Review API
+* Support group_by method
+* Support filter_by method
 
 ## Credit
 

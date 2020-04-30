@@ -1,0 +1,370 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "additionalProperties": true,
+    "required": [
+        "size",
+        "results"
+    ],
+    "properties": {
+        "size": {
+            "$id": "#/properties/size",
+            "type": "integer",
+            "title": "The Size Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                4.0
+            ]
+        },
+        "results": {
+            "$id": "#/properties/results",
+            "type": "array",
+            "title": "The Results Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "totals": {
+                            "value": -1.0,
+                            "key": "units",
+                            "type": "COUNT"
+                        },
+                        "group": {
+                            "key": "AppleTV",
+                            "title": "Apple TV"
+                        },
+                        "data": [
+                            {
+                                "date": "2020-04-01T00:00:00Z",
+                                "units": -1.0
+                            },
+                            {
+                                "date": "2020-04-02T00:00:00Z",
+                                "units": -1.0
+                            }
+                        ],
+                        "meetsThreshold": false,
+                        "adamId": "1318551883"
+                    },
+                    {
+                        "adamId": "1318551883",
+                        "totals": {
+                            "value": 4.0,
+                            "key": "units",
+                            "type": "COUNT"
+                        },
+                        "group": {
+                            "key": "iPad",
+                            "title": "iPad"
+                        },
+                        "data": [
+                            {
+                                "date": "2020-04-01T00:00:00Z",
+                                "units": 3.0
+                            },
+                            {
+                                "units": 1.0,
+                                "date": "2020-04-02T00:00:00Z"
+                            }
+                        ],
+                        "meetsThreshold": true
+                    },
+                    {
+                        "group": {
+                            "key": "iPhone",
+                            "title": "iPhone"
+                        },
+                        "data": [
+                            {
+                                "units": 112.0,
+                                "date": "2020-04-01T00:00:00Z"
+                            },
+                            {
+                                "units": 106.0,
+                                "date": "2020-04-02T00:00:00Z"
+                            }
+                        ],
+                        "meetsThreshold": true,
+                        "adamId": "1318551883",
+                        "totals": {
+                            "type": "COUNT",
+                            "value": 218.0,
+                            "key": "units"
+                        }
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/results/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                    {
+                        "adamId": "1318551883",
+                        "totals": {
+                            "type": "COUNT",
+                            "value": -1.0,
+                            "key": "units"
+                        },
+                        "group": {
+                            "key": "AppleTV",
+                            "title": "Apple TV"
+                        },
+                        "data": [
+                            {
+                                "units": -1.0,
+                                "date": "2020-04-01T00:00:00Z"
+                            },
+                            {
+                                "units": -1.0,
+                                "date": "2020-04-02T00:00:00Z"
+                            }
+                        ],
+                        "meetsThreshold": false
+                    },
+                    {
+                        "totals": {
+                            "type": "COUNT",
+                            "value": 4.0,
+                            "key": "units"
+                        },
+                        "group": {
+                            "key": "iPad",
+                            "title": "iPad"
+                        },
+                        "data": [
+                            {
+                                "units": 3.0,
+                                "date": "2020-04-01T00:00:00Z"
+                            },
+                            {
+                                "units": 1.0,
+                                "date": "2020-04-02T00:00:00Z"
+                            }
+                        ],
+                        "meetsThreshold": true,
+                        "adamId": "1318551883"
+                    },
+                    {
+                        "totals": {
+                            "type": "COUNT",
+                            "value": 218.0,
+                            "key": "units"
+                        },
+                        "group": {
+                            "key": "iPhone",
+                            "title": "iPhone"
+                        },
+                        "data": [
+                            {
+                                "date": "2020-04-01T00:00:00Z",
+                                "units": 112.0
+                            },
+                            {
+                                "units": 106.0,
+                                "date": "2020-04-02T00:00:00Z"
+                            }
+                        ],
+                        "meetsThreshold": true,
+                        "adamId": "1318551883"
+                    }
+                ],
+                "additionalProperties": true,
+                "required": [
+                    "adamId",
+                    "meetsThreshold",
+                    "group",
+                    "data",
+                    "totals"
+                ],
+                "properties": {
+                    "adamId": {
+                        "$id": "#/properties/results/items/properties/adamId",
+                        "type": "string",
+                        "title": "The Adamid Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "1318551883"
+                        ]
+                    },
+                    "meetsThreshold": {
+                        "$id": "#/properties/results/items/properties/meetsThreshold",
+                        "type": "boolean",
+                        "title": "The Meetsthreshold Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": false,
+                        "examples": [
+                            false
+                        ]
+                    },
+                    "group": {
+                        "$id": "#/properties/results/items/properties/group",
+                        "type": "object",
+                        "title": "The Group Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "key": "AppleTV",
+                                "title": "Apple TV"
+                            }
+                        ],
+                        "additionalProperties": true,
+                        "required": [
+                            "key",
+                            "title"
+                        ],
+                        "properties": {
+                            "key": {
+                                "$id": "#/properties/results/items/properties/group/properties/key",
+                                "type": "string",
+                                "title": "The Key Schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "AppleTV"
+                                ]
+                            },
+                            "title": {
+                                "$id": "#/properties/results/items/properties/group/properties/title",
+                                "type": "string",
+                                "title": "The Title Schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "Apple TV"
+                                ]
+                            }
+                        }
+                    },
+                    "data": {
+                        "$id": "#/properties/results/items/properties/data",
+                        "type": "array",
+                        "title": "The Data Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": [],
+                        "examples": [
+                            [
+                                {
+                                    "units": -1.0,
+                                    "date": "2020-04-01T00:00:00Z"
+                                },
+                                {
+                                    "units": -1.0,
+                                    "date": "2020-04-02T00:00:00Z"
+                                }
+                            ]
+                        ],
+                        "additionalItems": true,
+                        "items": {
+                            "$id": "#/properties/results/items/properties/data/items",
+                            "type": "object",
+                            "title": "The Items Schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "units": -1.0,
+                                    "date": "2020-04-01T00:00:00Z"
+                                },
+                                {
+                                    "date": "2020-04-02T00:00:00Z",
+                                    "units": -1.0
+                                }
+                            ],
+                            "additionalProperties": true,
+                            "required": [
+                                "date",
+                                "units"
+                            ],
+                            "properties": {
+                                "date": {
+                                    "$id": "#/properties/results/items/properties/data/items/properties/date",
+                                    "type": "string",
+                                    "title": "The Date Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": "",
+                                    "examples": [
+                                        "2020-04-01T00:00:00Z"
+                                    ]
+                                },
+                                "units": {
+                                    "$id": "#/properties/results/items/properties/data/items/properties/units",
+                                    "type": "number",
+                                    "title": "The Units Schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": 0,
+                                    "examples": [
+                                        -1.0
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "totals": {
+                        "$id": "#/properties/results/items/properties/totals",
+                        "type": "object",
+                        "title": "The Totals Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "value": -1.0,
+                                "key": "units",
+                                "type": "COUNT"
+                            }
+                        ],
+                        "additionalProperties": true,
+                        "required": [
+                            "value",
+                            "type",
+                            "key"
+                        ],
+                        "properties": {
+                            "value": {
+                                "$id": "#/properties/results/items/properties/totals/properties/value",
+                                "type": "number",
+                                "title": "The Value Schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": 0,
+                                "examples": [
+                                    -1.0
+                                ]
+                            },
+                            "type": {
+                                "$id": "#/properties/results/items/properties/totals/properties/type",
+                                "type": "string",
+                                "title": "The Type Schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "COUNT"
+                                ]
+                            },
+                            "key": {
+                                "$id": "#/properties/results/items/properties/totals/properties/key",
+                                "type": "string",
+                                "title": "The Key Schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "units"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

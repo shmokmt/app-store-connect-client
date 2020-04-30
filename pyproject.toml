@@ -20,6 +20,8 @@ python = "^3.6"
 requests = "^2.23.0"
 black = "^19.10b0"
 python-dotenv = "^0.13.0"
+jsonschema = "^3.2.0"
+python-dateutil = "^2.8.1"
 
 [tool.poetry-dynamic-versioning]
 enable = true
