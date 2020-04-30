@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from urllib.parse import urlparse
 from .dataclass import measures
-
+from .exceptions import AppStoreConnectValueError
 class Query(object):
     def __init__(self, app_id):
         self.config = {
@@ -12,6 +12,7 @@ class Query(object):
             "frequency": "DAY",
             "dimensionFilters": [],
         }
+        self.type = None
         self._api_url = "https://analytics.itunes.apple.com/analytics/api/v1"
         self._end_point = None
 
@@ -26,10 +27,12 @@ class Query(object):
 
     def metrics(self, config):
         # need: measures
+        # optional: group
+        self.type = "metrics"
         self._end_point = "/data/time-series"
         self._clean_config(["limit", "dimension"])
-        if not self.config.get("group"):
-            self.config["group"] = None
+        if config.get("group"):
+            self.config["group"] = config["group"]
         if not self.config.get("dimensionFilters"):
             self.config["dimensionFilters"] = []
         if not self.config.get("measures"):
@@ -38,6 +41,8 @@ class Query(object):
 
     def sources(self, config=None):
         # needs: dimension and measures
+        # do not: group
+        self.type = "sources"
         self._end_point = "/data/sources/list"
         if not self.config.get("limit"):
             self.config["limit"] = 200
@@ -53,7 +58,7 @@ class Query(object):
             if end:
                 datetime.strptime(end, "%Y-%m-%d")
         except ValueError:
-            raise ValueError("Incorrect format, shoube be YYYY-MM-DD.")
+            raise AppStoreConnectValueError("Incorrect format, shoube be YYYY-MM-DD.")
 
     def date(self, start, end=None):
         self._validate_date(start, end)
