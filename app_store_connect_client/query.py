@@ -62,6 +62,7 @@ class Query(object):
                 datetime.strptime(end, "%Y-%m-%d")
         except ValueError:
             raise AppStoreConnectValueError("Incorrect format, shoube be YYYY-MM-DD.")
+    
 
     def date_range(self, start, end=None):
         self._validate_date(start, end)
@@ -82,3 +83,8 @@ class Query(object):
             start = now - relativedelta(days=value)
         elif freq == frequency.monthly:
             start = now - relativedelta(months=value)
+        self.config["startTime"] = start.strftime("%Y-%m-%d") + "%00:00:000Z"
+        self.config["endTime"] = now.strftime("%Y-%m-%d") + "T00:00:000Z"
+        return self
+        
+        
