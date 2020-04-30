@@ -106,7 +106,7 @@ celerybeat.pid
 
 # Environments
 .app_store_env
-.app_store_env_private
+.app_store_private_env
 .env
 .venv
 env/
