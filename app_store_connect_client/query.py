@@ -2,7 +2,7 @@ from datetime import date, datetime
 from urllib.parse import urlparse
 from .dataclass import measures 
 from .dataclass import frequency
-from distutil.relativedelta import relativedelta
+from dateutil.relativedelta import relativedelta
 from datetime import datetime
 from .exceptions import AppStoreConnectValueError
 class Query(object):
