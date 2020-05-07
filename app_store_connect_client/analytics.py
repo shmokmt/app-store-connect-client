@@ -2,7 +2,6 @@ import requests
 from requests.exceptions import Timeout
 from urllib.parse import urlparse
 import json
-import jsonschema
 from . import query, exceptions
 from .log import logger
 
