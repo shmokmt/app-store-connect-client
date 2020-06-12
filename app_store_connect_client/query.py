@@ -31,17 +31,25 @@ class Query(object):
                 del self.config[key]
 
     def metrics(self, config):
-        # need: measures
-        # optional: group
+        """
+        Set request configuration to Query
+        Required param: measures
+        optional params:
+         group
+         dimensionFilters
+        """
         self.type = "metrics"
         self._end_point = "/data/time-series"
         self._clean_config(["limit", "dimension"])
         if config.get("group"):
             self.config["group"] = config["group"]
-        if not self.config.get("dimensionFilters"):
-            self.config["dimensionFilters"] = []
-        if not self.config.get("measures"):
+        if config.get("dimensionFilters"):
+            self.config["dimensionFilters"] = config["dimensionFilters"]
+        if config.get("measures"):
             self.config["measures"] = config["measures"]
+        else:
+            raise AppStoreConnectValueError(
+                "The 'measures' param is required in the config")
         return self
 
     def sources(self, config=None):
