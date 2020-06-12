@@ -1,10 +1,12 @@
-from datetime import date, datetime
-from urllib.parse import urlparse
-from .dataclass import measures 
-from .dataclass import frequency
-from dateutil.relativedelta import relativedelta
 from datetime import datetime
+from urllib.parse import urlparse
+
+from dateutil.relativedelta import relativedelta
+
+from .dataclass import frequency
 from .exceptions import AppStoreConnectValueError
+
+
 class Query(object):
     def __init__(self, app_id):
         self.config = {
@@ -54,15 +56,15 @@ class Query(object):
         if config:
             self.config.update(config)
         return self
-    
+
     def _validate_date(self, start, end):
         try:
             datetime.strptime(start, "%Y-%m-%d")
             if end:
                 datetime.strptime(end, "%Y-%m-%d")
         except ValueError:
-            raise AppStoreConnectValueError("Incorrect format, shoube be YYYY-MM-DD.")
-    
+            raise AppStoreConnectValueError(
+                "Incorrect format, shoube be YYYY-MM-DD.")
 
     def date_range(self, start, end=None):
         self._validate_date(start, end)
@@ -73,7 +75,7 @@ class Query(object):
         else:
             self.config["endTime"] = end + "T00:00:000Z"
         return self
-    
+
     def time_ago(self, value, freq=frequency.days):
         now = datetime.now()
         if freq == frequency.days:
@@ -86,5 +88,3 @@ class Query(object):
         self.config["startTime"] = start.strftime("%Y-%m-%d") + "%00:00:000Z"
         self.config["endTime"] = now.strftime("%Y-%m-%d") + "T00:00:000Z"
         return self
-        
-        
