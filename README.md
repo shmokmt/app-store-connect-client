@@ -22,12 +22,12 @@ import json
 
 
 app_id = '12345'
-client = app_store.Client(username="XXX", password="XXX)
+client = app_store.Client(username="XXX", password="XXX")
 # query config.
 config = {
     'measures': [app_store.measures.installs]
 }
-query = app_store.Query(app_id).metrics(config).date('2016-04-01', '2016-04-02')
+query = app_store.Query(app_id).metrics(config).date_range('2016-04-01', '2016-04-02')
 results = client.execute(query)
 print(json.dumps(results, indent=4))
 ```
