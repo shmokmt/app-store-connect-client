@@ -1,10 +1,6 @@
 name: reviewdog
-on: 
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request] 
 jobs:
-
 #  python:
 #    runs-on: ubuntu-latest
 #    steps:
@@ -16,11 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: reviewdog/action-misspell@v1
+      - name: misspell
+        uses: reviewdog/action-misspell@v1
         with:
           reporter: github-pr-review
-          github_token: $ {{ secrets.github_token }}
+          github_token: ${{ secrets.github_token }}
           level: warning
           locale: "US"
-  
-  
